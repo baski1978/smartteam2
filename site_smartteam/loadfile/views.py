@@ -19,6 +19,9 @@ def home(request):
 	values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
 	return render(request, 'empdetails.html',{'emplist':values})
 
+def funsplit(texts):
+	return texts.split(",")
+
 def getValues(filename):
 	values = []
 	try:

@@ -9,13 +9,13 @@
     <table>
         {% for items in emplist %}
         <tr>
-        {% with items|splits:"," as cols %}
+        {% cols = funsplit(items) %}
             {% for col in cols %}            
             <td>
                 {{ col }}
             </td>
             {% endfor %}
-        {% endwith %}
+
         </tr>
         {% endfor %}
     </table>
