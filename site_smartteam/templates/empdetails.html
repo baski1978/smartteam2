@@ -4,8 +4,9 @@
     <title>smart teams</title>
 </head>
 <body>
-    <h1>smart team creators!!!!!</h1>
-
-
+    <h1>smart team creators!!!!!?????</h1>
+    {% include 'empdetails.csv' %}
+    {% with open('empdetails.csv','r') as f: %}
+        <div>{{print(f)}}</div> 
 </body>
 </html>
