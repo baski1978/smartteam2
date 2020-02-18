@@ -9,8 +9,8 @@ from django.template.defaultfilters import stringfilter
 register = template.Library()
 
 
-@register.filter(name='cut')
-def splits(value,arg):
+@register.filter(name='splitting')
+def splitting(value,arg):
 	return value.split(arg)
 
 # Create your views here.
