@@ -6,12 +6,12 @@ import sys
 
 # Create your views here.
 def home(request):
-    values = []
-    values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
-    return render(request, 'empdetails.html',{'emplist':values})
+	values = []
+	values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
+	return render(request, 'empdetails.html',{'emplist':values})
 
 def getValues(filename):
-    values = []
+	values = []
 	try:
 		file=open(filename,'r')
 		for line in file:
