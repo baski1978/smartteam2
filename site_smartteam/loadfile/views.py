@@ -10,7 +10,7 @@ register = template.Library()
 
 
 @register.filter(name='cut')
-def splits(value,arg)
+def splits(value,arg):
 	return value.split(arg)
 
 # Create your views here.
