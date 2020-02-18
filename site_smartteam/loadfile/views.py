@@ -13,14 +13,14 @@ def home(request):
 def getValues(filename):
     values = []
 	try:
-	    file=open(filename,'r')
-	    for line in file:
-		    values.append(line)
+		file=open(filename,'r')
+		for line in file:
+			values.append(line)
 		return values
 	except OSError as err:
 		print("OS error: {0}".format(err))
 	except ValueError:
 		print("Could not convert data to an integer.")
 	except:
-	    print("Unexpected error:", sys.exc_info()[0])
+		print("Unexpected error:", sys.exc_info()[0])
 		raise
