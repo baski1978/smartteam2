@@ -3,9 +3,19 @@
 <head>
     <title>smart teams</title>
 </head>
+
 <body>
     {% load loadfiletemplates %}
-    <h1 align=center>People on Bench</h1>
+    <form action="projectteams"></form>
+    <table width=100%>
+        <thead>
+            <tr colspan=3 align=center>People on Bench</tr>
+        </thead>
+        <th>
+            <tr>Teamsize</tr><tr><input type="text" id="tsize" name="tsize" value="10"></tr><tr><input type="submit" value="MakeTeam"></tr>
+        </th>
+    </table>
+    </form>
     <div>
      <table colspace="1">
         <thead bgcolor="#d4efdf">

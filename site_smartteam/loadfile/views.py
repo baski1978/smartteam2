@@ -24,6 +24,20 @@ def home(request):
 	fint=Individuals.objects.filter(indTname='bench').all()	
 	return render(request, 'empdetails.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
 
+def home(request):
+	#values = []
+	#clos =[]
+	#values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
+	#values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
+	#Individuals.objects.all().delete()
+	#for rows in values:
+	#	cols = rows.split(",")
+	#	CreateInd(cols)
+	#
+	#fint=Team.objects.filter.all()	
+	#return render(request, 'projectteams.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
+	return render(request, 'projectteams.html')
+
 def funsplit(texts):
 	return texts.split(",")
 
