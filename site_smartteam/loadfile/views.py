@@ -27,10 +27,10 @@ def home(request):
 
 def projectteams(request):
 
-	randomlist[]
-	qindex = Individual.objects.all()	
-	randlist = random.sample(xrange(qindex.count()), 10)
-	randomteam[]
+	randomlist = []
+	qindex = Individuals.objects.all()	
+	randlist = random.sample(range(qindex.count()), 10)
+	randomteam = []
 
 	for i in randlist:
 		randomteam.append(qindex[i])
