@@ -1,20 +1,21 @@
 from django.db import models
 
-#class Team(models.Model):
-#    t-name              = models.CharField(max_length=20)
-#    t-devops-ratio      = models.IntegerField()
-#    t-design-ratio      = models.IntegerField()
-#    t-avg-tenure        = models.IntegerField()
-#    t-on-off-ratio      = models.IntegerField()
-#    t-ratio-gt-avg-exp  = models.IntegerField()
-#    t-pct-gno-thx-notes = models.IntegerField()
-#    t-pct-rno-thx-notes = models.IntegerField()
-#    t-avg-duration-bygrade              = models.IntegerField()
-#    t-pct-gduration-gt-avgduration      = models.IntegerField()
-#    t-avg-pto                           = models.IntegerField()
-#    t-pct-peple-gt-avgpto               = models.IntegerField()
-#    t-pct-same-jdate                    = models.IntegerField()
-#    t-fitnessvalue                      = models.IntegerField()
+class Team(models.Model):
+    t-name              = models.CharField(max_length=20)
+    indId               = models.IntegerField()
+    t-devops-ratio      = models.IntegerField()
+    t-design-ratio      = models.IntegerField()
+    t-avg-tenure        = models.IntegerField()
+    t-on-off-ratio      = models.IntegerField()
+    t-ratio-gt-avg-exp  = models.IntegerField()
+    t-pct-gno-thx-notes = models.IntegerField()
+    t-pct-rno-thx-notes = models.IntegerField()
+    t-avg-duration-bygrade              = models.IntegerField()
+    t-pct-gduration-gt-avgduration      = models.IntegerField()
+    t-avg-pto                           = models.IntegerField()
+    t-pct-peple-gt-avgpto               = models.IntegerField()
+    t-pct-same-jdate                    = models.IntegerField()
+    t-fitnessvalue                      = models.IntegerField()
 
 class Individuals(models.Model):
     indId              = models.IntegerField()
@@ -31,3 +32,4 @@ class Individuals(models.Model):
     indDoj             = models.DateField()
     indSkillLevel      = models.CharField(max_length=20)
     indSkill           = models.CharField(max_length=20)
+

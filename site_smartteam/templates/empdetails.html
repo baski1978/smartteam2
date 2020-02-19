@@ -5,7 +5,7 @@
 </head>
 <body>
     {% load loadfiletemplates %}
-    <h1>smart team creators!!!!!????? {{ ctrec }} ok ok!</h1>
+    <h1 align=center>People on Bench</h1>
     <div>
      <table colspace="1">
         <thead bgcolor="#d4efdf">
@@ -27,7 +27,6 @@
             </tr>
         </thead>
         <tbody>
-            {%count=0}
             {% for x in data_code %}
                 {% if forloop.counter|divisibleby:2 %}
                     <tr bgcolor="#fbfcfc">

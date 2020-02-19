@@ -21,7 +21,7 @@ def home(request):
 		cols = rows.split(",")
 		CreateInd(cols)
 
-	fint=Individuals.objects.all()	
+	fint=Individuals.objects.filter(indTname='bench').all()	
 	return render(request, 'empdetails.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
 
 def funsplit(texts):
