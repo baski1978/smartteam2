@@ -59,8 +59,8 @@ def CreateInd(ind):
 	emp.indGrade           = ind[10]
 	emp.indNoPto           = ind[11]
 	emp.indDoj             = datetime.strptime("2020/02/20", "%Y/%m/%d")	
-	emp.indSkillLevel      = ind[13]
-	emp.indSkill           = ind[14]
+	emp.indSkillLevel      = ind[12]
+	emp.indSkill           = ind[13]
 	emp.save()
 
 def countofrecords():
