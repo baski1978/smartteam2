@@ -6,5 +6,3 @@ urlpatterns = [
     path('',views.home, name='home' ),
 	path('projectteams',views.projectteams, name='projectteams' )
 ]
-
-projectteams
