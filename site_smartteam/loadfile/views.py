@@ -7,6 +7,7 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from loadfile.models import Individuals
 from datetime import datetime
+import random
 
 
 
@@ -25,18 +26,19 @@ def home(request):
 	return render(request, 'empdetails.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
 
 def projectteams(request):
-	#values = []
-	#clos =[]
-	#values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
-	#values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
-	#Individuals.objects.all().delete()
-	#for rows in values:
-	#	cols = rows.split(",")
-	#	CreateInd(cols)
-	#
-	#fint=Team.objects.filter.all()	
-	#return render(request, 'projectteams.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
-	return render(request, 'projectteams.html')
+
+	randomlist[]
+	qindex = Individual.objects.all()	
+	randlist = random.sample(xrange(qindex.count()), 10)
+	randomteam[]
+
+	for i in randlist:
+		randomteam.append(qindex[i])
+
+	populatetemtable(randomteam)
+	fint=TempTeam.objects.filter.all()	
+
+	return render(request, 'projectteams.html',{'data_code':fint})
 
 def funsplit(texts):
 	return texts.split(",")
@@ -80,3 +82,37 @@ def CreateInd(ind):
 def countofrecords():
 	ct = Individuals.objects.count()
 	return ct
+
+def populatetemtable(tempteam):
+	temp=TempTeam()
+	temp.tname=12345
+	temp.indId=12345
+	temp.tdevopsRatio=12345
+	temp.tdesignRatio=12345
+	temp.tavgTenure=12345
+	temp.tOnOffRatio=12345
+	temp.tratioGtAvgExp=12345
+	temp.tpctThxNotesG=12345
+	temp.tpctThxNotesR=12345
+	temp.tAvgDurationBygrade=12345
+	temp.tpctGdurationGtAvgduration=12345
+	temp.tAvgNoOfPto=12345
+	temp.tPctPepleGtAvgpto=12345
+	temp.tPctSameJdate=12345
+	temp.tFitnessValue=12345
+
+
+#calculatefitness
+
+#crossover with bench
+
+#mutate from bench
+
+#calculatefitness
+
+#if fitness=10 then comiit the team delete from bench and add to prjoect teams
+#else
+#go to crossover with bench
+
+
+

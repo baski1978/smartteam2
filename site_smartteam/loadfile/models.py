@@ -1,6 +1,6 @@
 from django.db import models
 
-class Team(models.Model):
+class TempTeam(models.Model):
     tname = models.CharField(max_length=20)
     indId = models.IntegerField()
     tdevopsRatio = models.IntegerField()

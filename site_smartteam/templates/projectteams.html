@@ -14,7 +14,53 @@
         </th>
     </table>
     <div>
-    <p>We are on project teams page</p>
+       <div>
+     <table colspace="1">
+        <thead bgcolor="#d4efdf">
+            <tr>
+                <th>tname</th>              
+                <th>indId</th>              
+                <th>tdevopsRatio</th>              
+                <th>tdesignRatio</th>              
+                <th>tavgTenure</th>              
+                <th>tOnOffRatio</th>              
+                <th>tratioGtAvgExp</th>              
+                <th>tpctThxNotesG</th>              
+                <th>tpctThxNotesR</th>              
+                <th>tAvgDurationBygrade</th>              
+                <th>tpctGdurationGtAvgduration</th>              
+                <th>tAvgNoOfPto</th>              
+                <th>tPctPepleGtAvgpto</th>              
+                <th>tPctSameJdate</th>              
+                <th>tFitnessValue</th>                       
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in data_code %}
+                {% if forloop.counter|divisibleby:2 %}
+                    <tr bgcolor="#fbfcfc">
+                {% else %}
+                    <tr bgcolor="#FFC300">
+                {% endif %}
+                        <td>{{ x.tname }}</td>
+                        <td>{{ x.indId }}</td>
+                        <td>{{ x.tdevopsRatio }}</td>
+                        <td>{{ x.tdesignRatio }}</td>
+                        <td>{{ x.tavgTenure }}</td>
+                        <td>{{ x.tOnOffRatio }}</td>
+                        <td>{{ x.tratioGtAvgExp }}</td>
+                        <td>{{ x.tpctThxNotesG }}</td>
+                        <td>{{ x.indThxNotesR }}</td>
+                        <td>{{ x.tAvgDurationBygrade }}</td>
+                        <td>{{ x.tpctGdurationGtAvgduration }}</td>
+                        <td>{{ x.tAvgNoOfPto }}</td>
+                        <td>{{ x.tPctPepleGtAvgpto }}</td>
+                        <td>{{ x.tPctSameJdate}}</td>
+                        <td>{{ x.tFitnessValue}}</td>
+                    </tr>
+            {% endfor %}
+        </tbody>
+    </table>
         
     </div>
 </body>
