@@ -14,9 +14,9 @@ from datetime import datetime
 def home(request):
 	values = []
 	clos =[]
-	#values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
-	values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
-	deleteobjects()
+	values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
+	#values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
+	Individuals.delete.objects()
 	for rows in values:
 		cols = rows.split(",")
 		CreateInd(cols)
