@@ -16,7 +16,7 @@ def home(request):
 	clos =[]
 	values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
 	#values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
-	Individuals.delete.objects()
+	Individuals.objects.all().delete()
 	for rows in values:
 		cols = rows.split(",")
 		CreateInd(cols)
@@ -58,7 +58,7 @@ def CreateInd(ind):
 	emp.indThxNotesR       = ind[9]
 	emp.indGrade           = ind[10]
 	emp.indNoPto           = ind[11]
-	emp.indDoj             = datetime.strptime(ind[12], "%Y/%m/%d")	
+	emp.indDoj             = datetime.strptime("2020/02/20", "%Y/%m/%d")	
 	emp.indSkillLevel      = ind[13]
 	emp.indSkill           = ind[14]
 	emp.save()
