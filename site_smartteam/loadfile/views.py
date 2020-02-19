@@ -36,7 +36,7 @@ def projectteams(request):
 		randomteam.append(qindex[i])
 
 	populatetemtable(randomteam)
-	fint=TempTeam.objects.filter.all()	
+	fint=TempTeam.objects.all()	
 
 	return render(request, 'projectteams.html',{'data_code':fint})
 
@@ -100,7 +100,7 @@ def populatetemtable(tempteam):
 	temp.tPctPepleGtAvgpto=12345
 	temp.tPctSameJdate=12345
 	temp.tFitnessValue=12345
-
+	temp.save()
 
 #calculatefitness
 
