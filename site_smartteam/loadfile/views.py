@@ -24,7 +24,7 @@ def home(request):
 	fint=Individuals.objects.filter(indTname='bench').all()	
 	return render(request, 'empdetails.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
 
-def home(request):
+def projectteams(request):
 	#values = []
 	#clos =[]
 	#values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
