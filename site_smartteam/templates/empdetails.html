@@ -5,21 +5,54 @@
 </head>
 <body>
     {% load loadfiletemplates %}
-    <h1>smart team creators!!!!!?????</h1>
+    <h1>smart team creators!!!!!????? {{ ctrec }} ok ok!</h1>
     <div>
-    <table>
-        {% for items in emplist %}
-        <tr>
-            {% with items|splitting:"," as cols %}      
-            {% for col in cols %}            
-            <td>
-                {{ col }}
-            </td>
+     <table colspace="1">
+        <thead bgcolor="#d4efdf">
+            <tr >
+                <th>indId</th>              
+                <th>indTname</th>           
+                <th>indExp</th>             
+                <th>indCost</th>            
+                <th>indSite</th>            
+                <th>indRole</th>                    
+                <th>indOnoroff</th>         
+                <th>indThxNotesG</th>       
+                <th>indThxNotesR</th>       
+                <th>indGrade</th>           
+                <th>indNoPto</th>           
+                <th>indDoj</th>             
+                <th>indSkillLevel</th>      
+                <th>indSkill</th>           
+            </tr>
+        </thead>
+        <tbody>
+            {%count=0}
+            {% for x in data_code %}
+                {% if forloop.counter|divisibleby:2 %}
+                    <tr bgcolor="#fbfcfc">
+                {% else %}
+                    <tr bgcolor="#FFC300">
+                {% endif %}
+                        <td>{{ x.indId }}</td>
+                        <td>{{ x.indTname }}</td>
+                        <td>{{ x.indExp }}</td>
+                        <td>{{ x.indCost }}</td>
+                        <td>{{ x.indSite }}</td>
+                        <td>{{ x.indRole }}</td>
+                        <td>{{ x.indOnoroff }}</td>
+                        <td>{{ x.indThxNotesG }}</td>
+                        <td>{{ x.indThxNotesR }}</td>
+                        <td>{{ x.indGrade }}</td>
+                        <td>{{ x.indNoPto }}</td>
+                        <td>{{ x.indDoj }}</td>
+                        <td>{{ x.indSkillLevel }}</td>
+                        <td>{{ x.indSkill}}</td>
+                    </tr>
             {% endfor %}
-            {% endwith %}
-        </tr>
-        {% endfor %}
+        </tbody>
     </table>
+        
     </div>
 </body>
 </html>
