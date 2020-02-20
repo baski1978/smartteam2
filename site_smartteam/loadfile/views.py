@@ -127,13 +127,13 @@ def populatetemtable(tempteam):
 def gettdevopsRatio(Id):
 	return 100*Individuals.objects.filter(indRole='devops').filter(indId__in=Id).count()/Individuals.objects.filter(indId__in=Id).count()
 
-def gettdesignRatio(Id)
+def gettdesignRatio(Id):
 	return 100*Individuals.objects.filter(indRole='design').filter(indId__in=Id).count()/Individuals.objects.filter(indId__in=Id).count()
 
-def gettOnOffRatio(tempteam)
+def gettOnOffRatio(tempteam):
 	return 100*Individuals.objects.filter(indRole='off').filter(indId__in=Id).count()/Individuals.objects.filter(indRole='on').filter(indId__in=Id).count()
 
-def gettratioGtAvgExp(tempteam)
+def gettratioGtAvgExp(tempteam):
 	return Individuals.objects.filter(indId__in=Id).aggregate(Avg(indExp))
 #def gettpctThxNotesG(tempteam)
 #def gettpctThxNotesR(tempteam)
