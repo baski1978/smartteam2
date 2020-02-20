@@ -6,6 +6,7 @@ import sys
 from django import template
 from django.template.defaultfilters import stringfilter
 from loadfile.models import Individuals
+from loadfile.models import TempTeam
 from datetime import datetime
 import random
 
