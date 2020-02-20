@@ -87,23 +87,54 @@ def countofrecords():
 ############ Populate Project table for fitness ###############
 
 def populatetemtable(tempteam):
-	temp=TempTeam()
-	temp.tname=12345
-	temp.indId=12345
-	temp.tdevopsRatio=12345
-	temp.tdesignRatio=12345
-	temp.tavgTenure=12345
-	temp.tOnOffRatio=12345
-	temp.tratioGtAvgExp=12345
-	temp.tpctThxNotesG=12345
-	temp.tpctThxNotesR=12345
-	temp.tAvgDurationBygrade=12345
-	temp.tpctGdurationGtAvgduration=12345
-	temp.tAvgNoOfPto=12345
-	temp.tPctPepleGtAvgpto=12345
-	temp.tPctSameJdate=12345
-	temp.tFitnessValue=12345
-	temp.save()
+
+	tdevopsRatio=gettdevopsRatio(tempteam)
+#	tdesignRatio=gettdesignRatio(tempteam)
+#	tavgTenure=gettavgTenure(tempteam)
+#	tOnOffRatio=gettOnOffRatio(tempteam)
+#	tratioGtAvgExp=gettratioGtAvgExp(tempteam)
+#	tpctThxNotesG=gettpctThxNotesG(tempteam)
+#	tpctThxNotesR=gettpctThxNotesR(tempteam)
+#	tAvgDurationBygrade=gettAvgDurationBygrade(tempteam)
+#	tpctGdurationGtAvgduration=gettpctGdurationGtAvgduration(tempteam)
+#	tAvgNoOfPto=gettAvgNoOfPto(tempteam)
+#	tPctPepleGtAvgpto=gettPctPepleGtAvgpto(tempteam)
+#	tPctSameJdate=gettPctSameJdate(tempteam)
+#	tFitnessValue=gettFitnessValue(tempteam)
+
+	for x in tempteam:
+		temp=TempTeam()
+		temp.tname=x.tname
+		temp.indId=x.indId
+		temp.tdevopsRatio= '123' # tdevopsRatio
+		temp.tdesignRatio= '123' # tdesignRatio
+		temp.tavgTenure= '123' # tavgTenure
+		temp.tOnOffRatio= '123' # tOnOffRatio
+		temp.tratioGtAvgExp= '123' # tratioGtAvgExp
+		temp.tpctThxNotesG= '123' # tpctThxNotesG
+		temp.tpctThxNotesR= '123' # tpctThxNotesR
+		temp.tAvgDurationBygrade= '123' # tAvgDurationBygrade
+		temp.tpctGdurationGtAvgduration= '123' # tpctGdurationGtAvgduration
+		temp.tAvgNoOfPto= '123' # tAvgNoOfPto
+		temp.tPctPepleGtAvgpto= '123' # tPctPepleGtAvgpto
+		temp.tPctSameJdate= '123' # tPctSameJdate
+		temp.tFitnessValue= '123' # tFitnessValue
+		temp.save()
+
+def gettdevopsRatio(tempteam)
+	Individual.objects.filter(role='devops' and indId in (tempteam.indId) ).count()/Individual.objects.filter(indId in (tempteam.indId) ).count()
+#def gettdesignRatio(tempteam)
+#def gettavgTenure(tempteam)
+#def gettOnOffRatio(tempteam)
+#def gettratioGtAvgExp(tempteam)
+#def gettpctThxNotesG(tempteam)
+#def gettpctThxNotesR(tempteam)
+#def gettAvgDurationBygrade(tempteam)
+#def gettpctGdurationGtAvgduration(tempteam)
+#def gettAvgNoOfPto(tempteam)
+#def gettPctPepleGtAvgpto(tempteam)
+#def gettPctSameJdate(tempteam)
+#def gettFitnessValue(tempteam)
 
 #calculatefitness
 
