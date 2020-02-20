@@ -38,7 +38,7 @@ def projectteams(request):
 
 	for i in randlist:
 		randomteam.append(qindex[i])
-
+	TempTeam.objects().all().delete()
 	populatetemtable(randomteam)
 	fint=TempTeam.objects.all()	
 
@@ -88,8 +88,6 @@ def countofrecords():
 ############ Populate Project table for fitness ###############
 
 def populatetemtable(tempteam):
-	TempTeam.objects().all().delete()
-	
 	idlist=[]
 	for x in tempteam:
 		idlist.append(x.indId)
