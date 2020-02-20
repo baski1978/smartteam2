@@ -8,6 +8,7 @@ from django.template.defaultfilters import stringfilter
 from loadfile.models import Individuals
 from loadfile.models import TempTeam
 from datetime import datetime
+from django.db.models import Avg
 import random
 
 
@@ -106,7 +107,7 @@ def populatetemtable(tempteam):
 
 	for x in tempteam:
 		temp=TempTeam()
-		temp.tname=x.tname
+		temp.tname=x.indTname
 		temp.indId=x.indId
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= '123' # tdesignRatio
@@ -124,12 +125,16 @@ def populatetemtable(tempteam):
 		temp.save()
 
 def gettdevopsRatio(Id):
-	Individuals.objects.filter(role='devops' and indId in Id ).count()/Individuals.objects.filter(indId in Id ).count()
+	return 100*Individuals.objects.filter(indRole='devops').filter(indId__in Id).count()/Individuals.objects.filter(indId__in Id).count()
 
-#def gettdesignRatio(tempteam)
-#def gettavgTenure(tempteam)
-#def gettOnOffRatio(tempteam)
-#def gettratioGtAvgExp(tempteam)
+def gettdesignRatio(Id)
+	return 100*Individuals.objects.filter(indRole='design').filter(indId__in Id).count()/Individuals.objects.filter(indId__in Id).count()
+
+def gettOnOffRatio(tempteam)
+	return 100*Individuals.objects.filter(indRole='off').filter(indId__in Id).count()/Individuals.objects.filter(indRole='on').filter(indId__in Id).count()
+
+def gettratioGtAvgExp(tempteam)
+	return Individuals.objects.filter(indId__in Id).aggregate(Avg(indExp))
 #def gettpctThxNotesG(tempteam)
 #def gettpctThxNotesR(tempteam)
 #def gettAvgDurationBygrade(tempteam)
