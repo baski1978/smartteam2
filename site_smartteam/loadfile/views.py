@@ -87,8 +87,10 @@ def countofrecords():
 ############ Populate Project table for fitness ###############
 
 def populatetemtable(tempteam):
-
-	tdevopsRatio=gettdevopsRatio(tempteam)
+	idlist=[]
+	for x in tempteam:
+		idlist.append(x.indId)
+	gettdevopsRatio(idlist)
 #	tdesignRatio=gettdesignRatio(tempteam)
 #	tavgTenure=gettavgTenure(tempteam)
 #	tOnOffRatio=gettOnOffRatio(tempteam)
@@ -121,8 +123,9 @@ def populatetemtable(tempteam):
 		temp.tFitnessValue= '123' # tFitnessValue
 		temp.save()
 
-def gettdevopsRatio(tempteam)
-	Individual.objects.filter(role='devops' and indId in (tempteam.indId) ).count()/Individual.objects.filter(indId in (tempteam.indId) ).count()
+def gettdevopsRatio(Id):
+	Individuals.objects.filter(role='devops' and indId in Id ).count()/Individuals.objects.filter(indId in Id ).count()
+
 #def gettdesignRatio(tempteam)
 #def gettavgTenure(tempteam)
 #def gettOnOffRatio(tempteam)
