@@ -18,8 +18,8 @@ import random
 def home(request):
 	values = []
 	clos =[]
-	values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
-	#values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
+	#values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
+	values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
 	Individuals.objects.all().delete()
 	for rows in values:
 		cols = rows.split(",")
@@ -92,10 +92,10 @@ def populatetemtable(tempteam):
 	for x in tempteam:
 		idlist.append(x.indId)
 	tdevopsRatio=gettdevopsRatio(idlist)
-#	tdesignRatio=gettdesignRatio(tempteam)
-#	tavgTenure=gettavgTenure(tempteam)
-#	tOnOffRatio=gettOnOffRatio(tempteam)
-#	tratioGtAvgExp=gettratioGtAvgExp(tempteam)
+	tdesignRatio=gettdesignRatio(tempteam)
+	tavgTenure=gettavgTenure(tempteam)
+	tOnOffRatio=gettOnOffRatio(tempteam)
+	tratioGtAvgExp=gettratioGtAvgExp(tempteam)
 #	tpctThxNotesG=gettpctThxNotesG(tempteam)
 #	tpctThxNotesR=gettpctThxNotesR(tempteam)
 #	tAvgDurationBygrade=gettAvgDurationBygrade(tempteam)
@@ -111,7 +111,7 @@ def populatetemtable(tempteam):
 		temp.indId=x.indId
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= tdesignRatio
-		temp.tavgTenure=tavgTenure
+		temp.tavgTenure=tratioGtAvgExp
 		temp.tOnOffRatio=  tOnOffRatio
 		temp.tratioGtAvgExp=  tratioGtAvgExp
 		temp.tpctThxNotesG= '123' # tpctThxNotesG
