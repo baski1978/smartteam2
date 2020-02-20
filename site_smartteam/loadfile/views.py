@@ -90,7 +90,7 @@ def populatetemtable(tempteam):
 	idlist=[]
 	for x in tempteam:
 		idlist.append(x.indId)
-	gettdevopsRatio(idlist)
+	tdevopsRatio=gettdevopsRatio(idlist)
 #	tdesignRatio=gettdesignRatio(tempteam)
 #	tavgTenure=gettavgTenure(tempteam)
 #	tOnOffRatio=gettOnOffRatio(tempteam)
@@ -108,7 +108,7 @@ def populatetemtable(tempteam):
 		temp=TempTeam()
 		temp.tname=x.tname
 		temp.indId=x.indId
-		temp.tdevopsRatio= '123' # tdevopsRatio
+		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= '123' # tdesignRatio
 		temp.tavgTenure= '123' # tavgTenure
 		temp.tOnOffRatio= '123' # tOnOffRatio
