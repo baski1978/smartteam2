@@ -88,6 +88,8 @@ def countofrecords():
 ############ Populate Project table for fitness ###############
 
 def populatetemtable(tempteam):
+	TempTeam.objects().all().delete()
+	
 	idlist=[]
 	for x in tempteam:
 		idlist.append(x.indId)
@@ -110,10 +112,10 @@ def populatetemtable(tempteam):
 		temp.tname=x.indTname
 		temp.indId=x.indId
 		temp.tdevopsRatio=tdevopsRatio
-		temp.tdesignRatio= '123' # tdesignRatio
-		temp.tavgTenure= '123' # tavgTenure
-		temp.tOnOffRatio= '123' # tOnOffRatio
-		temp.tratioGtAvgExp= '123' # tratioGtAvgExp
+		temp.tdesignRatio= tdesignRatio
+		temp.tavgTenure=tavgTenure
+		temp.tOnOffRatio=  tOnOffRatio
+		temp.tratioGtAvgExp=  tratioGtAvgExp
 		temp.tpctThxNotesG= '123' # tpctThxNotesG
 		temp.tpctThxNotesR= '123' # tpctThxNotesR
 		temp.tAvgDurationBygrade= '123' # tAvgDurationBygrade
