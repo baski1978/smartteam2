@@ -13,6 +13,7 @@ import random
 
 
 # Create your views here.
+########### Home Page#####################
 def home(request):
 	values = []
 	clos =[]
@@ -26,6 +27,7 @@ def home(request):
 	fint=Individuals.objects.filter(indTname='bench').all()	
 	return render(request, 'empdetails.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
 
+########### select random ten people for project #####################
 def projectteams(request):
 
 	randomlist = []
@@ -41,9 +43,7 @@ def projectteams(request):
 
 	return render(request, 'projectteams.html',{'data_code':fint})
 
-def funsplit(texts):
-	return texts.split(",")
-
+########### Readfile to return file records as as list #####################
 def getValues(filename):
 	values = []
 	try:
@@ -59,9 +59,8 @@ def getValues(filename):
 	except:
 		print("Unexpected error:", sys.exc_info()[0])
 		raise
-def deleteobjects():
-	Individuals.objects.all().delete()
 
+########### Readfile to retunr file records as as list #####################
 def CreateInd(ind):
 	emp = Individuals()
 	emp.indId              = ind[0]
@@ -80,9 +79,12 @@ def CreateInd(ind):
 	emp.indSkill           = ind[13]
 	emp.save()
 
+############ Get count of records for Individuals table ###############
 def countofrecords():
 	ct = Individuals.objects.count()
 	return ct
+
+############ Populate Project table for fitness ###############
 
 def populatetemtable(tempteam):
 	temp=TempTeam()
