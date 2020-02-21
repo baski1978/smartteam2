@@ -34,7 +34,8 @@ def home(request):
 	return render(request, 'empdetails.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
 
 ########### select random ten people for project #####################
-def projectteams(request):
+
+def getteamindividuals():
 
 	randomlist = []
 	qindex = Individuals.objects.all()	
@@ -43,6 +44,11 @@ def projectteams(request):
 
 	for i in randlist:
 		randomteam.append(qindex[i])
+	return randomteam
+
+def projectteams(request):
+
+	randomteam=getteamindividuals()
 	TempTeam.objects.all().delete()
 	populatetemtable(randomteam)
 	fint=TempTeam.objects.all()	
@@ -118,7 +124,7 @@ def populatetemtable(tempteam):
 
 	for x in tempteam:
 		temp=TempTeam()
-		temp.tname=projectnumber
+		temp.tname=projectnumber[0].prjID__max
 		temp.indId= x.indId
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= tdesignRatio
@@ -165,17 +171,6 @@ def gettPctSameJdate(Id):
 def gettFitnessValue(Id):
 	return 124
 
-#calculatefitness
-
-#crossover with bench
-
-#mutate from bench
-
-#calculatefitness
-
-#if fitness=10 then comiit the team delete from bench and add to prjoect teams
-#else
-#go to crossover with bench
 
 
 
