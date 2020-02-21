@@ -98,6 +98,7 @@ def populatetemtable(tempteam):
 	prjno=Prjnumbers()
 	prjno.tag='prj'
 	prjno.save()
+	projectnumber = Prjnumbers.objects.aggregate(Max('prjID'))
 
 	for x in tempteam:
 		idlist.append(x.indId)
@@ -117,7 +118,7 @@ def populatetemtable(tempteam):
 
 	for x in tempteam:
 		temp=TempTeam()
-		temp.tname=Prjnumbers.objects.aggregate(Max('prjID'))
+		temp.tname=projectnumber
 		temp.indId= x.indId
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= tdesignRatio
