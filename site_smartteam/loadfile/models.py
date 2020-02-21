@@ -35,4 +35,4 @@ class Individuals(models.Model):
 
 class Prjnumbers(models.Model):
     prjID = models.AutoField(primary_key=True)
-    tag=models.CharField(max_length=3)
+    tag=models.CharField(max_length=3,default='prj')
