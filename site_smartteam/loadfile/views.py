@@ -10,6 +10,7 @@ from loadfile.models import TempTeam
 from datetime import datetime
 from django.db.models import Avg
 import random
+from settings import CSVFILES_FOLDER
 
 
 
@@ -18,11 +19,13 @@ import random
 def home(request):
 	values = []
 	clos =[]
-	#values = getValues('/home/nsrivin/dir_smartteam/env_smartteam/site_smartteam/loadfile/empdetails.csv')
-	values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
+	rowsx = []
+	values = getValues(CSVFILES_FOLDER+'empdetails.csv')
+	#values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
 	Individuals.objects.all().delete()
-	for rows in values:
-		cols = rows.split(",")
+
+	for rowsx in values:
+		cols = rowsx.split(",")
 		CreateInd(cols)
 
 	fint=Individuals.objects.filter(indTname='bench').all()	
@@ -38,7 +41,7 @@ def projectteams(request):
 
 	for i in randlist:
 		randomteam.append(qindex[i])
-	TempTeam.objects().all().delete()
+	TempTeam.objects.all().delete()
 	populatetemtable(randomteam)
 	fint=TempTeam.objects.all()	
 
