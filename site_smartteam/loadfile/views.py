@@ -10,6 +10,7 @@ from loadfile.models import Prjnumbers
 from loadfile.models import TempTeam
 from datetime import datetime
 from django.db.models import Avg
+from django.db.models import Max
 import random
 from site_smartteam.settings import CSVFILES_FOLDER
 from django.db.models import Q
