@@ -99,14 +99,14 @@ def populatetemtable(tempteam):
 	tavgTenure=gettratioGtAvgExp(idlist)
 	tOnOffRatio=gettOnOffRatio(idlist)
 	tratioGtAvgExp=gettratioGtAvgExp(idlist)
-#	tpctThxNotesG=gettpctThxNotesG(tempteam)
-#	tpctThxNotesR=gettpctThxNotesR(tempteam)
-#	tAvgDurationBygrade=gettAvgDurationBygrade(tempteam)
-#	tpctGdurationGtAvgduration=gettpctGdurationGtAvgduration(tempteam)
-#	tAvgNoOfPto=gettAvgNoOfPto(tempteam)
-#	tPctPepleGtAvgpto=gettPctPepleGtAvgpto(tempteam)
-#	tPctSameJdate=gettPctSameJdate(tempteam)
-#	tFitnessValue=gettFitnessValue(tempteam)
+	tpctThxNotesG=gettpctThxNotesG(idlist)
+	tpctThxNotesR=gettpctThxNotesR(idlist)
+	tAvgDurationBygrade=gettAvgDurationBygrade(idlist)
+	tpctGdurationGtAvgduration=gettpctGdurationGtAvgduration(tempteam)
+	tAvgNoOfPto=gettAvgNoOfPto(idlist)
+	tPctPepleGtAvgpto=gettPctPepleGtAvgpto(idlist)
+	tPctSameJdate=gettPctSameJdate(idlist)
+	tFitnessValue=gettFitnessValue(idlist)
 
 	for x in tempteam:
 		temp=TempTeam()
@@ -117,14 +117,14 @@ def populatetemtable(tempteam):
 		temp.tavgTenure=tratioGtAvgExp
 		temp.tOnOffRatio=  tOnOffRatio
 		temp.tratioGtAvgExp=  tratioGtAvgExp
-		temp.tpctThxNotesG= '123' # tpctThxNotesG
-		temp.tpctThxNotesR= '123' # tpctThxNotesR
-		temp.tAvgDurationBygrade= '123' # tAvgDurationBygrade
-		temp.tpctGdurationGtAvgduration= '123' # tpctGdurationGtAvgduration
-		temp.tAvgNoOfPto= '123' # tAvgNoOfPto
-		temp.tPctPepleGtAvgpto= '123' # tPctPepleGtAvgpto
-		temp.tPctSameJdate= '123' # tPctSameJdate
-		temp.tFitnessValue= '123' # tFitnessValue
+		temp.tpctThxNotesG=  tpctThxNotesG
+		temp.tpctThxNotesR=  tpctThxNotesR
+		temp.tAvgDurationBygrade=  tAvgDurationBygrade
+		temp.tpctGdurationGtAvgduration=   tpctGdurationGtAvgduration
+		temp.tAvgNoOfPto= tAvgNoOfPto
+		temp.tPctPepleGtAvgpto=  tPctPepleGtAvgpto
+		temp.tPctSameJdate=  tPctSameJdate
+		temp.tFitnessValue=  tFitnessValue
 		temp.save()
 
 
@@ -138,16 +138,24 @@ def gettOnOffRatio(Id):
 	return 100*Individuals.objects.filter(indRole='off').filter(indId__in=Id).count()/Individuals.objects.filter(indId__in=Id).count()
 
 def gettratioGtAvgExp(Id):
-	return Individuals.objects.filter(indId__in=Id).aggregate(Avg('indExp'))
-
-#def gettpctThxNotesG(tempteam)
-#def gettpctThxNotesR(tempteam)
-#def gettAvgDurationBygrade(tempteam)
-#def gettpctGdurationGtAvgduration(tempteam)
-#def gettAvgNoOfPto(tempteam)
-#def gettPctPepleGtAvgpto(tempteam)
-#def gettPctSameJdate(tempteam)
-#def gettFitnessValue(tempteam)
+	#return Individuals.objects.filter(indId__in=Id).aggregate(Avg('indExp'))
+	return 124
+def gettpctThxNotesG(Id):
+	return 124
+def gettpctThxNotesR(Id):
+	return 124
+def gettAvgDurationBygrade(Id):
+	return 124
+def gettpctGdurationGtAvgduration(Id):
+	return 124
+def gettAvgNoOfPto(Id):
+	return 124
+def gettPctPepleGtAvgpto(Id):
+	return 124
+def gettPctSameJdate(Id):
+	return 124
+def gettFitnessValue(Id):
+	return 124
 
 #calculatefitness
 
