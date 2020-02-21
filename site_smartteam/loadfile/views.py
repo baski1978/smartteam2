@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import os
-from django.conf import site_smartteam.settings
+from django.conf import settings
 import sys
 from django import template
 from django.template.defaultfilters import stringfilter
@@ -10,7 +10,7 @@ from loadfile.models import TempTeam
 from datetime import datetime
 from django.db.models import Avg
 import random
-from settings import CSVFILES_FOLDER
+from site_smartteam.settings import CSVFILES_FOLDER
 
 
 
@@ -21,7 +21,6 @@ def home(request):
 	clos =[]
 	rowsx = []
 	values = getValues(CSVFILES_FOLDER+'empdetails.csv')
-	#values = getValues('C:/Users/Admin/source/repos/smartteam2/site_smartteam/loadfile/empdetails.csv')
 	Individuals.objects.all().delete()
 
 	for rowsx in values:
@@ -111,7 +110,7 @@ def populatetemtable(tempteam):
 	for x in tempteam:
 		temp=TempTeam()
 		temp.tname=x.indTname
-		temp.indId=x.indId
+		temp.indId= 8888888 #x.indId
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= tdesignRatio
 		temp.tavgTenure=tratioGtAvgExp
