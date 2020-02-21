@@ -94,10 +94,10 @@ def populatetemtable(tempteam):
 	for x in tempteam:
 		idlist.append(x.indId)
 	tdevopsRatio=gettdevopsRatio(idlist)
-	tdesignRatio=gettdesignRatio(tempteam)
-	tavgTenure=gettavgTenure(tempteam)
-	tOnOffRatio=gettOnOffRatio(tempteam)
-	tratioGtAvgExp=gettratioGtAvgExp(tempteam)
+	tdesignRatio=gettdesignRatio(idlist)
+	tavgTenure=gettavgTenure(idlist)
+	tOnOffRatio=gettOnOffRatio(idlist)
+	tratioGtAvgExp=gettratioGtAvgExp(idlist)
 #	tpctThxNotesG=gettpctThxNotesG(tempteam)
 #	tpctThxNotesR=gettpctThxNotesR(tempteam)
 #	tAvgDurationBygrade=gettAvgDurationBygrade(tempteam)
@@ -110,7 +110,7 @@ def populatetemtable(tempteam):
 	for x in tempteam:
 		temp=TempTeam()
 		temp.tname=x.indTname
-		temp.indId= 8888888 #x.indId
+		temp.indId= x.indId
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= tdesignRatio
 		temp.tavgTenure=tratioGtAvgExp
@@ -126,16 +126,17 @@ def populatetemtable(tempteam):
 		temp.tFitnessValue= '123' # tFitnessValue
 		temp.save()
 
+
 def gettdevopsRatio(Id):
 	return 100*Individuals.objects.filter(indRole='devops').filter(indId__in=Id).count()/Individuals.objects.filter(indId__in=Id).count()
 
 def gettdesignRatio(Id):
 	return 100*Individuals.objects.filter(indRole='design').filter(indId__in=Id).count()/Individuals.objects.filter(indId__in=Id).count()
 
-def gettOnOffRatio(tempteam):
+def gettOnOffRatio(Id):
 	return 100*Individuals.objects.filter(indRole='off').filter(indId__in=Id).count()/Individuals.objects.filter(indRole='on').filter(indId__in=Id).count()
 
-def gettratioGtAvgExp(tempteam):
+def gettratioGtAvgExp(Id):
 	return Individuals.objects.filter(indId__in=Id).aggregate(Avg(indExp))
 #def gettpctThxNotesG(tempteam)
 #def gettpctThxNotesR(tempteam)
