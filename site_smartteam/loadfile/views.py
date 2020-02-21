@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import os
-from django.conf import settings
+from django.conf import site_smartteam.settings
 import sys
 from django import template
 from django.template.defaultfilters import stringfilter
