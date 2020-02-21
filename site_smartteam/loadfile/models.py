@@ -33,3 +33,5 @@ class Individuals(models.Model):
     indSkillLevel      = models.CharField(max_length=20)
     indSkill           = models.CharField(max_length=20)
 
+class Prjnumbers(models.Model):
+    prjID = models.IntegerField()
