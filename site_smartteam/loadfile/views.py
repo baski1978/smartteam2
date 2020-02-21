@@ -92,6 +92,11 @@ def countofrecords():
 
 def populatetemtable(tempteam):
 	idlist=[]
+
+	prjno=Prjnumbers()
+	prjno.tag='prj'
+	prjno.save()
+
 	for x in tempteam:
 		idlist.append(x.indId)
 	tdevopsRatio=gettdevopsRatio(idlist)
@@ -110,7 +115,7 @@ def populatetemtable(tempteam):
 
 	for x in tempteam:
 		temp=TempTeam()
-		temp.tname=x.indTname
+		temp.tname=Prjnumbers.objects.aggregate(Max('prjID'))
 		temp.indId= x.indId
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= tdesignRatio
@@ -124,7 +129,7 @@ def populatetemtable(tempteam):
 		temp.tAvgNoOfPto= tAvgNoOfPto
 		temp.tPctPepleGtAvgpto=  tPctPepleGtAvgpto
 		temp.tPctSameJdate=  tPctSameJdate
-		temp.tFitnessValue=  tFitnessValue
+		temp.tFitnessValue=  0
 		temp.save()
 
 

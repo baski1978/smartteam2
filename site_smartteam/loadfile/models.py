@@ -34,4 +34,5 @@ class Individuals(models.Model):
     indSkill           = models.CharField(max_length=20)
 
 class Prjnumbers(models.Model):
-    prjID = models.IntegerField()
+    prjID = models.AutoField(primary_key=True)
+    tag=models.CharField(max_length=3)
