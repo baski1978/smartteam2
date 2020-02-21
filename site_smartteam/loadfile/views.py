@@ -95,7 +95,7 @@ def populatetemtable(tempteam):
 		idlist.append(x.indId)
 	tdevopsRatio=gettdevopsRatio(idlist)
 	tdesignRatio=gettdesignRatio(idlist)
-	tavgTenure=gettavgTenure(idlist)
+	tavgTenure=gettratioGtAvgExp(idlist)
 	tOnOffRatio=gettOnOffRatio(idlist)
 	tratioGtAvgExp=gettratioGtAvgExp(idlist)
 #	tpctThxNotesG=gettpctThxNotesG(tempteam)
