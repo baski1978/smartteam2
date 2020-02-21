@@ -104,7 +104,7 @@ def populatetemtable(tempteam):
 	prjno=Prjnumbers()
 	prjno.tag='prj'
 	prjno.save()
-	projectnumber = Prjnumbers.objects.aggregate(Max('prjID'))
+	projectnumber = Settings.objects.values_list('bb_bonus_qualify', flat=True).last()
 
 	for x in tempteam:
 		idlist.append(x.indId)
@@ -124,7 +124,7 @@ def populatetemtable(tempteam):
 
 	for x in tempteam:
 		temp=TempTeam()
-		temp.tname=projectnumber[0].prjID__max
+		temp.tname=projectnumber
 		temp.indId= x.indId
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= tdesignRatio
