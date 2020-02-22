@@ -13,7 +13,7 @@ class TempTeam(models.Model):
     tCntdistinctskills = models.IntegerField()
     tFitnessValue = models.CharField(max_length=20)
 
-class IndConsidered2(models.Model):
+class IndConsidered(models.Model):
     indId= models.IntegerField()
 
 class Individuals(models.Model):

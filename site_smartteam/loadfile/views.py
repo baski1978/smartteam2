@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import os
-#from django.conf import site_smartteam.settings
+from django.conf import site_smartteam.settings
 import sys
 from django import template
 from django.template.defaultfilters import stringfilter
@@ -22,7 +22,7 @@ from django.db.models import Q
 # Create your views here.
 ########### em details Page#####################
 def home(request):
-	IndConsidered2.objects.all().delete()
+	IndConsidered.objects.all().delete()
 	return render(request, 'index.html')
 
 def empdetails(request):
@@ -44,7 +44,7 @@ def empdetails(request):
 def getteamindividuals(cnt):
 
 	randlist = []
-	randlist = Individuals.objects.exclude(~Q(indId__in=IndConsidered2.objects.values_list('indId',flat=True))).values_list('indId',flat=True)
+	randlist = Individuals.objects.exclude(~Q(indId__in=IndConsidered.objects.values_list('indId',flat=True))).values_list('indId',flat=True)
 	randlist2 = random.sample(list(randlist), cnt)
 	return randlist2
 	
@@ -77,7 +77,7 @@ def crossover():
 	popularskillIds = getPopularSkill(Id)
 	indsConsidered=TempTeam.objects.exclude(indId__in=popularskillIds).values_list('indId',flat=True)
 	for x in indsConsidered:
-			prjno=IndConsidered2()
+			prjno=IndConsidered()
 			prjno.indId=x
 			prjno.save()
 	TempTeam.objects.filter(~Q(indId__in=popularskillIds)).delete()
@@ -90,7 +90,7 @@ def mutation():
 	ind28Ids = Individuals.objects.filter(Q(indGrade=28)).filter(indId__in=tempids)
 	if len(ind28Ids)>2:
 		for x in ind28Ids[2:]:
-			prjno=IndConsidered2()
+			prjno=IndConsidered()
 			prjno.indId=x
 			prjno.save()
 		mutationIds=getteamindividuals(len(ind28Ids)-2)
@@ -99,14 +99,14 @@ def mutation():
 		pass
 	elif len(ind28Ids)==1:
 		for x in tempids[9:]:
-			prjno=IndConsidered2()
+			prjno=IndConsidered()
 			prjno.indId=x
 			prjno.save()
 		mutationIds=getteamindividuals(1)
 		populatetemtable(mutationIds)
 	elif len(ind28Ids)==0:
 		for x in tempids[8:]:
-			prjno=IndConsidered2()
+			prjno=IndConsidered()
 			prjno.indId=x
 			prjno.save()
 		mutationIds=getteamindividuals(2)
