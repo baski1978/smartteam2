@@ -21,6 +21,10 @@
 					margin-left:500px;
 					margin-top:200px;
 				}
+			.but{
+					margin-left:500px;
+					margin-top:300px;
+				}
 			.data{
 				display:none;
 			}
@@ -28,16 +32,17 @@
 	</head>
 	<body>
 		<form action="empdetails">
-			<input type="submit" value="submit" />
 		</form>
-		<div class="g-signin2" data-onsuccess="onSignIn"></div>
+		<div class="g-signin2" data-onsuccess="onSignIn">
+		</div>
+		<input class="but" type="submit" value="submit" />
 		<div class=" data">
 			<p>Profile Details</p>
 			<img id="pic" class="img-circle" width="100" height="100" />
 			<p>Email Address</p>
 			<p id="email" class="aler alert-danger"></p>
 			<button onclick="SignOut()" class="btn btn-danger">SignOut</button>
-			
+
 		</div>
 	</body>
 </html>
