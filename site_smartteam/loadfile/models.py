@@ -5,17 +5,13 @@ class TempTeam(models.Model):
     indId = models.IntegerField()
     tdevopsRatio = models.IntegerField()
     tdesignRatio = models.IntegerField()
-    tavgTenure = models.IntegerField()
+    tavgCost = models.IntegerField()
     tOnOffRatio = models.IntegerField()
     tratioGtAvgExp = models.IntegerField()
-    tpctThxNotesG = models.IntegerField()
-    tpctThxNotesR = models.IntegerField()
-    tAvgDurationBygrade = models.IntegerField()
-    tpctGdurationGtAvgduration = models.IntegerField()
     tAvgNoOfPto = models.IntegerField()
-    tPctPepleGtAvgpto = models.IntegerField()
-    tPctSameJdate = models.IntegerField()
-    tFitnessValue = models.IntegerField()
+    tAvgSkillLevel = models.IntegerField()
+    tCntdistinctskills = models.IntegerField()
+    tFitnessValue = models.CharField(max_length=20)
 
 class Individuals(models.Model):
     indId              = models.IntegerField()
@@ -36,3 +32,6 @@ class Individuals(models.Model):
 class Prjnumbers(models.Model):
     prjID = models.AutoField(primary_key=True)
     tag=models.CharField(max_length=3,default='prj')
+
+class IndConsidered(models.Model):
+    indId= models.IntegerField()

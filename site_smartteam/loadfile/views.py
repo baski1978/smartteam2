@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import os
-from django.conf import settings
+#from django.conf import site_smartteam.settings
 import sys
 from django import template
 from django.template.defaultfilters import stringfilter
 from loadfile.models import Individuals
+from loadfile.models import IndConsidered
 from loadfile.models import Prjnumbers
 from loadfile.models import TempTeam
 from datetime import datetime
@@ -18,7 +19,7 @@ from django.db.models import Q
 
 
 # Create your views here.
-########### Home Page#####################
+########### em details Page#####################
 def home(request):
 	values = []
 	clos =[]
@@ -31,28 +32,46 @@ def home(request):
 		CreateInd(cols)
 
 	fint=Individuals.objects.filter(indTname='bench').all()	
-	return render(request, 'empdetails.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
+	return render(request, 'empdetails2.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
 
 ########### select random ten people for project #####################
 
-def getteamindividuals():
+def getteamindividuals(cnt):
 
 	randomlist = []
-	qindex = Individuals.objects.all()	
-	randlist = random.sample(range(qindex.count()), 10)
+	qindex = Individuals.objects.all() #exclude(indId__in=IndConsidered.objects.all().values('indId'))	
+	randlist = random.sample(range(qindex.count()), cnt)
 	randomteam = []
 
 	for i in randlist:
 		randomteam.append(qindex[i])
 	return randomteam
+	
+
+
+########### Render the project team page #####################
 
 def projectteams(request):
 
-	randomteam=getteamindividuals()
+	randomteam=getteamindividuals(10)
 	TempTeam.objects.all().delete()
 	populatetemtable(randomteam)
-	fint=TempTeam.objects.all()	
+	fitvalue=TempTeam.objects.values_list('tFitnessValue',flat=True)[:1]
 
+	while fitvalue != 'fit':
+		randomteam=getteamindividuals(8)
+		for x in TempTeam.objects.values_list('indId',flat=True)[:8]:
+			prjno=IndConsidered()
+			prjno.indId=x
+			prjno.save()
+			TempTeam.objects.filter(indId=x).delete()
+		for x in TempTeam.objects.values_list('indId',flat=True)[:2]:
+			randomteam.append(x)
+			TempTeam.objects.filter(indId=x).delete()
+		populatetemtable(randomteam)
+		fitvalue=TempTeam.objects.values_list('tFitnessValue',flat=True)[:1]	
+
+	fint=TempTeam.objects.all()	
 	return render(request, 'projectteams.html',{'data_code':fint})
 
 ########### Readfile to return file records as as list #####################
@@ -104,23 +123,23 @@ def populatetemtable(tempteam):
 	prjno=Prjnumbers()
 	prjno.tag='prj'
 	prjno.save()
-	projectnumber = Settings.objects.values_list('bb_bonus_qualify', flat=True).last()
+	projectnumber = Prjnumbers.objects.values_list('prjID', flat=True).last()
 
 	for x in tempteam:
 		idlist.append(x.indId)
+
 	tdevopsRatio=gettdevopsRatio(idlist)
 	tdesignRatio=gettdesignRatio(idlist)
-	tavgTenure=gettratioGtAvgExp(idlist)
+	tavgCost=gettavgCost(idlist)
 	tOnOffRatio=gettOnOffRatio(idlist)
 	tratioGtAvgExp=gettratioGtAvgExp(idlist)
-	tpctThxNotesG=gettpctThxNotesG(idlist)
-	tpctThxNotesR=gettpctThxNotesR(idlist)
-	tAvgDurationBygrade=gettAvgDurationBygrade(idlist)
-	tpctGdurationGtAvgduration=gettpctGdurationGtAvgduration(tempteam)
 	tAvgNoOfPto=gettAvgNoOfPto(idlist)
-	tPctPepleGtAvgpto=gettPctPepleGtAvgpto(idlist)
-	tPctSameJdate=gettPctSameJdate(idlist)
-	tFitnessValue=gettFitnessValue(idlist)
+	tAvgSkillLevel=gettAvgSkillLevel(idlist)
+	tCntdistinctskills=gettCntdistinctskills(idlist)
+	tFitnessValue= gettFitnessValue(tdevopsRatio,tdesignRatio,tavgCost,tOnOffRatio,\
+								 tratioGtAvgExp,tAvgNoOfPto,tAvgSkillLevel,tCntdistinctskills,)
+
+
 
 	for x in tempteam:
 		temp=TempTeam()
@@ -128,17 +147,13 @@ def populatetemtable(tempteam):
 		temp.indId= x.indId
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= tdesignRatio
-		temp.tavgTenure=tratioGtAvgExp
+		temp.tavgCost=tavgCost['indCost__avg']
 		temp.tOnOffRatio=  tOnOffRatio
-		temp.tratioGtAvgExp=  tratioGtAvgExp
-		temp.tpctThxNotesG=  tpctThxNotesG
-		temp.tpctThxNotesR=  tpctThxNotesR
-		temp.tAvgDurationBygrade=  tAvgDurationBygrade
-		temp.tpctGdurationGtAvgduration=   tpctGdurationGtAvgduration
-		temp.tAvgNoOfPto= tAvgNoOfPto
-		temp.tPctPepleGtAvgpto=  tPctPepleGtAvgpto
-		temp.tPctSameJdate=  tPctSameJdate
-		temp.tFitnessValue=  0
+		temp.tratioGtAvgExp=  tratioGtAvgExp['indExp__avg']
+		temp.tAvgNoOfPto  = tAvgNoOfPto['indNoPto__avg']
+		temp.tAvgSkillLevel  = tAvgSkillLevel['indSkillLevel__avg']
+		temp.tCntdistinctskills  = tCntdistinctskills
+		temp.tFitnessValue  = tFitnessValue 	
 		temp.save()
 
 
@@ -148,28 +163,37 @@ def gettdevopsRatio(Id):
 def gettdesignRatio(Id):
 	return 100*Individuals.objects.filter(indRole='design').filter(indId__in=Id).count()/Individuals.objects.filter(indId__in=Id).count()
 
+def gettavgCost(Id):
+	return Individuals.objects.filter(indId__in=Id).aggregate(Avg('indCost'))
+
 def gettOnOffRatio(Id):
 	return 100*Individuals.objects.filter(indRole='off').filter(indId__in=Id).count()/Individuals.objects.filter(indId__in=Id).count()
 
 def gettratioGtAvgExp(Id):
-	#return Individuals.objects.filter(indId__in=Id).aggregate(Avg('indExp'))
-	return 124
-def gettpctThxNotesG(Id):
-	return 124
-def gettpctThxNotesR(Id):
-	return 124
-def gettAvgDurationBygrade(Id):
-	return 124
-def gettpctGdurationGtAvgduration(Id):
-	return 124
+	return Individuals.objects.filter(indId__in=Id).aggregate(Avg('indExp'))
+
 def gettAvgNoOfPto(Id):
-	return 124
-def gettPctPepleGtAvgpto(Id):
-	return 124
-def gettPctSameJdate(Id):
-	return 124
-def gettFitnessValue(Id):
-	return 124
+	return Individuals.objects.filter(indId__in=Id).aggregate(Avg('indNoPto'))
+
+def gettAvgSkillLevel(Id):
+		return Individuals.objects.filter(indId__in=Id).aggregate(Avg('indSkillLevel'))
+
+def gettCntdistinctskills(Id):
+		return Individuals.objects.filter(indId__in=Id).filter(indGrade__lte=28).values('indSkill').distinct().count()
+
+def gettFitnessValue(tdevopsRatio,tdesignRatio,tavgCost,tOnOffRatio,\
+								 tratioGtAvgExp,tAvgNoOfPto,tAvgSkillLevel,tCntdistinctskills,):
+	if(	tdevopsRatio == 50 and \
+		tdesignRatio ==30 and \
+		tavgCost >=60 and tavgCost <=70  and \
+		tOnOffRatio == 90 and \
+		tratioGtAvgExp >=4 and tratioGtAvgExp<=6 and \
+		tAvgNoOfPto <= 20 and \
+		tAvgSkillLevel >=2.5 and tAvgSkillLevel <=5 and \
+		tCntdistinctskills == 1 ) :
+		return "fit"
+	else :
+		return "not fit"
 
 
 
