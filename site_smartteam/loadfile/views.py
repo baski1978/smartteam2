@@ -22,16 +22,19 @@ from django.db.models import Q
 # Create your views here.
 ########### em details Page#####################
 def home(request):
+	return render(request, 'index.html')
+
+def empdetails(request):
 	values = []
 	clos =[]
 	rowsx = []
-	values = getValues(CSVFILES_FOLDER+'empdetails.csv')
-	Individuals.objects.all().delete()
+	#values = getValues(CSVFILES_FOLDER+'empdetails.csv')
+	#Individuals.objects.all().delete()
 
-	for rowsx in values:
-		cols = rowsx.split(",")
-		CreateInd(cols)
-
+	#for rowsx in values:
+	#	cols = rowsx.split(",")
+	#	CreateInd(cols)
+	IndConsidered.objects.all().delete()
 	fint=Individuals.objects.filter(indTname='bench').all()	
 	return render(request, 'empdetails2.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
 
@@ -39,14 +42,10 @@ def home(request):
 
 def getteamindividuals(cnt):
 
-	randomlist = []
-	qindex = Individuals.objects.all() #exclude(indId__in=IndConsidered.objects.all().values('indId'))	
-	randlist = random.sample(range(qindex.count()), cnt)
-	randomteam = []
-
-	for i in randlist:
-		randomteam.append(qindex[i])
-	return randomteam
+	randlist = []
+	randlist = Individuals.objects.exclude(~Q(indId__in=IndConsidered.objects.values_list('indId',flat=True))).values_list('indId',flat=True)
+	randlist2 = random.sample(list(randlist), cnt)
+	return randlist2
 	
 
 
@@ -59,26 +58,58 @@ def projectteams(request):
 	populatetemtable(randomteam)
 	fitvalue=TempTeam.objects.values_list('tFitnessValue',flat=True)[:1]
 
-	popularskillIds = getPopularSkill(randomteam)
-
-		
-
-	while fitvalue != 'fit':
-		randomteam=getteamindividuals(10-len(popularskillIds))
-		for x in TempTeam.objects.exclude(indId__in=popularskillIds).values_list('indId',flat=True):
-			prjno=IndConsidered()
-			prjno.indId=x
-			prjno.save()
-			TempTeam.objects.filter(indId=x).delete()
-		for x in TempTeam.objects.filter(indId__in=popularskillIds).values_list('indId',flat=True):
-			randomteam.append(x)
-			TempTeam.objects.filter(indId=x).delete()
-		populatetemtable(randomteam)
-		fitvalue=TempTeam.objects.values_list('tFitnessValue',flat=True)[:1]	
+#	while fitvalue != 'fit':
+	crossover()
+	
+	#aftercrossover=TempTeam.objects.all()	
+	mutation()
+	#aftermutation=TempTeam.objects.all()	
+	fitvalue=TempTeam.objects.values_list('tFitnessValue',flat=True)[:1]
 
 	fint=TempTeam.objects.all()	
 	return render(request, 'projectteams.html',{'data_code':fint})
+		
+	
 
+def crossover():
+	Id=TempTeam.objects.values_list('indId',flat=True)
+	popularskillIds = getPopularSkill(Id)
+	indsConsidered=TempTeam.objects.exclude(indId__in=popularskillIds).values_list('indId',flat=True)
+	for x in indsConsidered:
+			prjno=IndConsidered()
+			prjno.indId=x
+			prjno.save()
+	TempTeam.objects.filter(~Q(indId__in=popularskillIds)).delete()
+	ct = TempTeam.objects.count()
+	crossoverIds=getteamindividuals(10-ct)
+	populatetemtable(crossoverIds)
+
+def mutation():
+	tempids = TempTeam.objects.values_list('indId',flat=True)
+	ind28Ids = Individuals.objects.filter(Q(indGrade=28)).filter(indId__in=tempids)
+	if len(ind28Ids)>2:
+		for x in ind28Ids[2:]:
+			prjno=IndConsidered()
+			prjno.indId=x
+			prjno.save()
+		mutationIds=getteamindividuals(len(ind28Ids)-2)
+		populatetemtable(mutationIds)
+	elif len(ind28Ids)==2:
+		pass
+	elif len(ind28Ids)==1:
+		for x in tempids[9:]:
+			prjno=IndConsidered()
+			prjno.indId=x
+			prjno.save()
+		mutationIds=getteamindividuals(1)
+		populatetemtable(mutationIds)
+	elif len(ind28Ids)==0:
+		for x in tempids[8:]:
+			prjno=IndConsidered()
+			prjno.indId=x
+			prjno.save()
+		mutationIds=getteamindividuals(2)
+		populatetemtable(mutationIds) 
 ########### Readfile to return file records as as list #####################
 def getValues(filename):
 	values = []
@@ -131,7 +162,7 @@ def populatetemtable(tempteam):
 	projectnumber = Prjnumbers.objects.values_list('prjID', flat=True).last()
 
 	for x in tempteam:
-		idlist.append(x.indId)
+		idlist.append(x)
 
 	tdevopsRatio=gettdevopsRatio(idlist)
 	tdesignRatio=gettdesignRatio(idlist)
@@ -149,7 +180,7 @@ def populatetemtable(tempteam):
 	for x in tempteam:
 		temp=TempTeam()
 		temp.tname=projectnumber
-		temp.indId= x.indId
+		temp.indId= x
 		temp.tdevopsRatio=tdevopsRatio
 		temp.tdesignRatio= tdesignRatio
 		temp.tavgCost=tavgCost['indCost__avg']
@@ -162,7 +193,7 @@ def populatetemtable(tempteam):
 		temp.save()
 
 def getPopularSkill(Id):
-	most_common = Individuals.objects.filter(indId__in=Id).annotate(mc=Count('indSkill')).order_by('-mc')[0].mc
+	most_common = Individuals.objects.filter(indId__in=Id).filter(~Q(indRole='domain')).annotate(mc=Count('indSkill')).order_by('-mc')[0].mc
 	popularskillIds = Individuals.objects.filter(indId__in=Id).filter(indSkill=most_common).values_list('indId',flat=True)
 	return popularskillIds
 
@@ -194,11 +225,11 @@ def gettFitnessValue(tdevopsRatio,tdesignRatio,tavgCost,tOnOffRatio,\
 								 tratioGtAvgExp,tAvgNoOfPto,tAvgSkillLevel,tCntdistinctskills,):
 	if(	tdevopsRatio == 50 and \
 		tdesignRatio ==30 and \
-		tavgCost >=60 and tavgCost <=70  and \
+		tavgCost['indCost__avg'] >=60 and tavgCost['indCost__avg'] <=70  and \
 		tOnOffRatio == 90 and \
-		tratioGtAvgExp >=4 and tratioGtAvgExp<=6 and \
-		tAvgNoOfPto <= 20 and \
-		tAvgSkillLevel >=2.5 and tAvgSkillLevel <=5 and \
+		tratioGtAvgExp['indExp__avg'] >=4 and tratioGtAvgExp['indExp__avg']<=6 and \
+		tAvgNoOfPto['indNoPto__avg'] <= 20 and \
+		tAvgSkillLevel['indSkillLevel__avg'] >=2.5 and tAvgSkillLevel['indSkillLevel__avg'] <=5 and \
 		tCntdistinctskills == 1 ) :
 		return "fit"
 	else :
