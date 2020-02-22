@@ -12,6 +12,7 @@ from loadfile.models import TempTeam
 from datetime import datetime
 from django.db.models import Avg
 from django.db.models import Max
+from django.db.models import Count
 import random
 from site_smartteam.settings import CSVFILES_FOLDER
 from django.db.models import Q
@@ -58,14 +59,18 @@ def projectteams(request):
 	populatetemtable(randomteam)
 	fitvalue=TempTeam.objects.values_list('tFitnessValue',flat=True)[:1]
 
+	popularskillIds = getPopularSkill(randomteam)
+
+		
+
 	while fitvalue != 'fit':
-		randomteam=getteamindividuals(8)
-		for x in TempTeam.objects.values_list('indId',flat=True)[:8]:
+		randomteam=getteamindividuals(10-len(popularskillIds))
+		for x in TempTeam.objects.exclude(indId__in=popularskillIds).values_list('indId',flat=True):
 			prjno=IndConsidered()
 			prjno.indId=x
 			prjno.save()
 			TempTeam.objects.filter(indId=x).delete()
-		for x in TempTeam.objects.values_list('indId',flat=True)[:2]:
+		for x in TempTeam.objects.filter(indId__in=popularskillIds).values_list('indId',flat=True):
 			randomteam.append(x)
 			TempTeam.objects.filter(indId=x).delete()
 		populatetemtable(randomteam)
@@ -156,6 +161,10 @@ def populatetemtable(tempteam):
 		temp.tFitnessValue  = tFitnessValue 	
 		temp.save()
 
+def getPopularSkill(Id):
+	most_common = Individuals.objects.filter(indId__in=Id).annotate(mc=Count('indSkill')).order_by('-mc')[0].mc
+	popularskillIds = Individuals.objects.filter(indId__in=Id).filter(indSkill=most_common).values_list('indId',flat=True)
+	return popularskillIds
 
 def gettdevopsRatio(Id):
 	return 100*Individuals.objects.filter(indRole='devops').filter(indId__in=Id).count()/Individuals.objects.filter(indId__in=Id).count()
