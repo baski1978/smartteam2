@@ -5,7 +5,7 @@ import sys
 from django import template
 from django.template.defaultfilters import stringfilter
 from loadfile.models import Individuals
-from loadfile.models import IndConsidered2
+from loadfile.models import IndConsidered
 from loadfile.models import Prjnumbers
 from loadfile.models import TempTeam
 from datetime import datetime
