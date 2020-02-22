@@ -28,12 +28,12 @@ def empdetails(request):
 	values = []
 	clos =[]
 	rowsx = []
-	#values = getValues(CSVFILES_FOLDER+'empdetails.csv')
-	#Individuals.objects.all().delete()
+	values = getValues(CSVFILES_FOLDER+'empdetails.csv')
+	Individuals.objects.all().delete()
 
-	#for rowsx in values:
-	#	cols = rowsx.split(",")
-	#	CreateInd(cols)
+	for rowsx in values:
+		cols = rowsx.split(",")
+		CreateInd(cols)
 	
 	fint=Individuals.objects.filter(indTname='bench').all()	
 	return render(request, 'empdetails2.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
