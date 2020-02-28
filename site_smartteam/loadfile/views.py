@@ -28,12 +28,12 @@ def empdetails(request):
 	values = []
 	clos =[]
 	rowsx = []
-	values = getValues(CSVFILES_FOLDER+'empdetails.csv')
-	Individuals.objects.all().delete()
+#	values = getValues(CSVFILES_FOLDER+'empdetails.csv')
+#	Individuals.objects.all().delete()
 
-	for rowsx in values:
-		cols = rowsx.split(",")
-		CreateInd(cols)
+#	for rowsx in values:
+#		cols = rowsx.split(",")
+#		CreateInd(cols)
 	
 	fint=Individuals.objects.filter(indTname='bench').all()	
 	return render(request, 'empdetails2.html',{'emplist':values,'ctrec':countofrecords(),'data_code':fint })
@@ -43,9 +43,22 @@ def empdetails(request):
 def getteamindividuals(cnt):
 
 	randlist = []
-	randlist = Individuals.objects.exclude(~Q(indId__in=IndConsidered.objects.values_list('indId',flat=True))).values_list('indId',flat=True)
-	randlist2 = random.sample(list(randlist), cnt)
-	return randlist2
+	randlist3 = []
+	randlist4 = []
+	#randlist = Individuals.objects.exclude(~Q(indId__in=IndConsidered.objects.values_list('indId',flat=True))).values_list('indId',flat=True)
+	#randlist = Individuals.objects.values_list('indId',flat=True)
+	randlist = list(Individuals.objects.all().values_list('indId'))
+	randlist2 = random.sample(randlist, cnt)
+
+	#randlist3=[i.replace("),", "") for i in randlist2 ]
+	#randlist3 = map(lambda x: "".join(x).replace("(", ""), randlist2)
+	#randlist4 = map(lambda x: "".join(x).replace("(", ""), randlist3)
+	for i in randlist2:
+		randlist3.append("".join(str(i)).replace(",)",""))
+	for i in randlist3:
+		randlist4.append("".join(str(i)).replace("(",""))
+
+	return list(randlist4)
 	
 
 
