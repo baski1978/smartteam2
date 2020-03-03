@@ -4,10 +4,10 @@
 	<title> Google Signin</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<!--	<meta name="google-signin-client_id" content="845306117708-9vl3rp4892dan9ob7olceoresohm179r.apps.googleusercontent.com">-->
-	<meta name="google-signin-client_id" content="117738754940572551207">
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<meta name="google-signin-client_id" content="845306117708-9vl3rp4892dan9ob7olceoresohm179r.apps.googleusercontent.com">
+	<script src="https://apis.google.com/js/client:platform.js" async defer></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
 	<script src="script.js">
 		function onSignIn(googleUser) {
 			var profile = googleUser.getBasicProfile();
@@ -16,7 +16,14 @@
 			$("#pic").attr("src", profile.getImageUrl());
 			$("#email").text(profile.getEamil());
 		}
+        function start2() {
+            gapi.load('auth2', function () {
+                auth2=gapi2.auth2.init();
+            });
+        }
 	</script>
+	
+
 	<style>
 		.g-signin2 {
 			margin-left: 500px;
@@ -33,20 +40,17 @@
 		}
 	</style>
 </head>
-	<body>
-		<form action="empdetails">
-			<input class="but" type="submit" value="submit" />
-		</form>
-
-		<div class="g-signin2" data-onsuccess="onSignIn">		</div>
+<body>
+	<form action="empdetails">
+		<div class="g-signin2" data-onsuccess="onSignIn" >		</div>
 		<div class=" data">
 			<p>Profile Details</p>
 			<img id="pic" class="img-circle" width="100" height="100" />
 			<p>Email Address</p>
 			<p id="email" class="aler alert-danger"></p>
 			<button onclick="SignOut()" class="btn btn-danger">SignOut</button>
-
 		</div>
-
-	</body>
+		<input class="but" type="submit" value="submit" />
+	</form>
+</body>
 </html>
