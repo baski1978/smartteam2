@@ -1,59 +1,62 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>smart teams</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
 </head>
 <body>
-    {% load loadfiletemplates %}
-    <table width=100%>
+    <table width=100% border="1">
         <thead>
-            <tr colspan=3 align=center>Project Teas</tr>
+            <tr align=center><th colspan=4>Project Teams</th></tr>
         </thead>
-        <th>
-            <tr>Teamsize</tr><tr><inp<input type="text">ut><input /></tr><tr><input type="submit"></tr>
-        </th>
+        <tr>
+            <th>Teamsize</th>
+            <th> <a href="{% url 'projectteams' indIdno=1 %}"> Improvise</a>  </th>
+            <th> <a href="{% url 'projectteams' indIdno=1 %}"> Skip</a>       </th>
+            <th> <a href="{% url 'projectteams' indIdno=1 %}"> Commit</a>     </th>
+        </tr>
     </table>
     <div>
-       <div>
-     <table colspace="1">
-        <thead bgcolor="#d4efdf">
-            <tr>
-                <th>tname</th>              
-                <th>indId</th>              
-                <th>tdevopsRatio</th>              
-                <th>tdesignRatio</th>              
-                <th>tavgCost</th>              
-                <th>tOnOffRatio</th>              
-                <th>tratioGtAvgExp</th>                         
-                <th>tAvgNoOfPto</th>              
-                <th>tAvgSkillLevel</th>              
-                <th>tCntdistinctskills</th>              
-                <th>tFitnessValue</th>                       
-            </tr>
-        </thead>
-        <tbody>
-            {% for x in data_code %}
+        <table colspace="1" width=100%>
+            <thead bgcolor="#d4efdf">
+                <tr>
+                    <th>tname</th>
+                    <th>indId</th>
+                    <th>tdevopsRatio</th>
+                    <th>tdesignRatio</th>
+                    <th>tavgCost</th>
+                    <th>tOnOffRatio</th>
+                    <th>tratioGtAvgExp</th>
+                    <th>tAvgNoOfPto</th>
+                    <th>tAvgSkillLevel</th>
+                    <th>tCntdistinctskills</th>
+                    <th>tFitnessValue</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in data_prj %}
                 {% if forloop.counter|divisibleby:2 %}
-                    <tr bgcolor="#fbfcfc">
-                {% else %}
-                    <tr bgcolor="#FFC300">
-                {% endif %}
-                        <td>{{ x.tname }}</td>
-                        <td>{{ x.indId }}</td>
-                        <td>{{ x.tdevopsRatio }}</td>
-                        <td>{{ x.tdesignRatio }}</td>
-                        <td>{{ x.tavgCost  }}</td>
-                        <td>{{ x.tOnOffRatio }}</td>
-                        <td>{{ x.tratioGtAvgExp }}</td>
-                        <td>{{ x.tAvgNoOfPto  }}</td>
-                        <td>{{ x.tAvgSkillLevel  }}</td>
-                        <td>{{ x.tCntdistinctskills  }}</td>
-                        <td>{{ x.tFitnessValue}}</td>
-                    </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-        
+                <tr bgcolor="#fbfcfc">
+                    {% else %}
+                <tr bgcolor="#FFC300">
+                    {% endif %}
+                    <td>{{ x.tname }}</td>
+                    <td>{{ x.indId }}</td>
+                    <td>{{ x.tdevopsRatio }}</td>
+                    <td>{{ x.tdesignRatio }}</td>
+                    <td>{{ x.tavgCost  }}</td>
+                    <td>{{ x.tOnOffRatio }}</td>
+                    <td>{{ x.tratioGtAvgExp }}</td>
+                    <td>{{ x.tAvgNoOfPto  }}</td>
+                    <td>{{ x.tAvgSkillLevel  }}</td>
+                    <td>{{ x.tCntdistinctskills  }}</td>
+                    <td>{{ x.tFitnessValue}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+    {% include "singelemp.html" with data_code=indIdnodetails %}
 </body>
 </html>

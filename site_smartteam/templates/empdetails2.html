@@ -6,18 +6,18 @@
 
 <body>
     {% load loadfiletemplates %}
-    <form action="projectteams">
-    <table width=100%>
-        <thead>
-            <tr colspan=3 align=center>People on Bench</tr>
-        </thead>
-        <th>
-            <tr>Teamsize</tr><tr><input type="text" id="tsize" name="tsize" value="10"></tr><tr><input type="submit" value="MakeTeam"></tr>
-        </th>
+    <table width=100% border="1">
+        <tr   style="text-align:center">
+          <th colspan=3><H1>All the People on Bench</H1></th>
+        </tr>
+        <tr>
+            <th>Teamsize</th>
+            <th><input type="text" id="tsize" name="tsize" value="10"></th>
+            <th><a href="{% url 'projectteams' indIdno=0 %}">Make a Team</a></th>
+        </tr>
     </table>
-    </form>
     <div>
-     <table colspace="1">
+     <table colspace="1" width=100%>
         <thead bgcolor="#d4efdf">
             <tr >
                 <th>indId</th>              
@@ -37,7 +37,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for x in data_code %}
+            {% for x in data_emp %}
                 {% if forloop.counter|divisibleby:2 %}
                     <tr bgcolor="#fbfcfc">
                 {% else %}
