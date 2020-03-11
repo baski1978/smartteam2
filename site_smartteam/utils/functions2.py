@@ -34,8 +34,10 @@ def getteamindividuals(cnt , skillfilt):
 	if skillfilt=='':
 		randlist = list(Individuals.objects.exclude(Q(indId__in=excludids)).values_list('indId',flat=True))
 	else:
-		randlist = list(Individuals.objects.exclude(Q(indId__in=excludids) & Q(indSkill__in=skillfilt )).values_list('indId',flat=True))
-	
+		randlist = Individuals.objects.exclude(Q(indId__in=excludids)).values_list('indId',flat=True)
+		randlist = list(randlist.filter(Q(indSkill__in =list(skillfilt) )))
+		logging.warning("randlist :oooo: " + str(skillfilt))
+
 	randlist2 = random.sample(randlist, cnt)
 	x= justcheck(1)
 	#randlist3=[i.replace("),", "") for i in randlist2 ]
@@ -53,7 +55,7 @@ def crossover():
 	Id=TempTeam.objects.values_list('indId',flat=True)
 	popularskillIds = getPopularSkill(Id)
 	popularskillvalue=Individuals.objects.filter(Q(indId__in = popularskillIds)).values_list('indSkill',flat=True)[:1]
-	logging.warning("popularskillvalue is $$$$$$$***#### : " + str(popularskillIds) + ":" + str(popularskillvalue) )
+	logging.warning("popularskillvalue is $$$$$$$***#### : " + str(popularskillIds) + ":" + str(popularskillvalue) + ":" + str(Id))
 	indsConsidered=TempTeam.objects.exclude(indId__in=popularskillIds).values_list('indId',flat=True)
 	for x in indsConsidered:
 			prjno=IndConsidered()
@@ -103,7 +105,7 @@ def getValues(filename):
 		file=open(filename,'r')
 		next(file)
 		for line in file:
-			values.append(line)
+			values.append(line.replace('\n',''))
 		return values
 	except OSError as err:
 		print("OS error: {0}".format(err))
@@ -178,8 +180,9 @@ def populatetemtable(tempteam):
 		temp.save()
 
 def getPopularSkill(Id):
-	most_common = Individuals.objects.filter(indId__in=Id).filter(~Q(indRole='domain')).annotate(mc=Count('indSkill')).order_by('-mc')[0].mc
-	popularskillIds = Individuals.objects.filter(indId__in=Id).filter(indSkill=most_common).values_list('indId',flat=True)
+	most_common = Individuals.objects.filter(indId__in=Id).filter(~Q(indRole='domain')).annotate(mc=Count('indSkill')).order_by('-mc')[:1]
+	mostcommonskill= most_common.values_list('indSkill',flat=True)
+	popularskillIds = Individuals.objects.filter(indId__in=Id).filter(indSkill__in=mostcommonskill).values_list('indId',flat=True)
 	return popularskillIds
 
 def gettdevopsRatio(Id):
