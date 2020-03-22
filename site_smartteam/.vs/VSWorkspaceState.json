@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\templates"
+    "\\csv_files",
+    "\\loadfile",
+    "\\site_smartteam",
+    "\\static",
+    "\\templates",
+    "\\utils"
   ],
+  "SelectedNode": "\\site_smartteam\\settings.py",
   "PreviewInSolutionExplorer": false
 }

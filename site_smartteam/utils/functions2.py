@@ -23,13 +23,11 @@ def justcheck(a):
 
 def getteamindividuals(cnt , skillfilt):
 
-	logging.warning(" skill filter is :****" + str(skillfilt))
+
 	randlist = []
 	randlist3 = []
 	randlist4 = []
-	#randlist = Individuals.objects.exclude(~Q(indId__in=IndConsidered.objects.values_list('indId',flat=True))).values_list('indId',flat=True)
-	#randlist = Individuals.objects.values_list('indId',flat=True)
-	#randlist = list(Individuals.objects.all().values_list('indId'))
+
 	excludids=IndConsidered.objects.values_list('indId',flat=True)
 	if skillfilt=='':
 		randlist = list(Individuals.objects.exclude(Q(indId__in=excludids)).values_list('indId',flat=True))
@@ -40,9 +38,7 @@ def getteamindividuals(cnt , skillfilt):
 
 	randlist2 = random.sample(randlist, cnt)
 	x= justcheck(1)
-	#randlist3=[i.replace("),", "") for i in randlist2 ]
-	#randlist3 = map(lambda x: "".join(x).replace("(", ""), randlist2)
-	#randlist4 = map(lambda x: "".join(x).replace("(", ""), randlist3)
+
 	for i in randlist2:
 		randlist3.append("".join(str(i)).replace(",)",""))
 	for i in randlist3:
@@ -61,7 +57,7 @@ def crossover():
 			prjno=IndConsidered()
 			prjno.indId=x
 			prjno.save()
-	#TempTeam.objects.filter(~Q(indId__in=popularskillIds)).delete()
+
 	TempTeam.objects.filter(Q(indId__in=indsConsidered)).delete()
 	ct = TempTeam.objects.count()
 	crossoverIds=getteamindividuals(10-ct,popularskillvalue)
