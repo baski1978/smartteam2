@@ -19,7 +19,7 @@ ind-id,ind-tname,ind-exp,ind-cost,ind-site,ind-role,ind-onoroff,ind-thx-notes-g,
 18,bench,2,50,3,devops,off,2,5,25,15,2/24/2018,2,ms-os
 19,bench,2,50,4,devops,off,2,1,25,10,2/25/2018,1,ms-os
 20,bench,1,30,4,devops,off,2,1,24,10,2/26/2019,1,ms-os
-21,bench,10,120,1,domain,on,0,20,28,30,2/17/2010,1,fullstack
+21,bench,10,120,1,domain,on,0,20,28,30,2/17/2010,1,fullstacks
 22,bench,9,100,2,domain,off,0,15,28,30,2/18/2011,2,fullstack
 23,bench,7,60,3,design,off,1,0,27,30,2/19/2013,3,jav-os
 24,bench,5,60,3,design,off,3,0,27,20,2/20/2015,4,jav-os

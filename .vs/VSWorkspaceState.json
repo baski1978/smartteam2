@@ -4,8 +4,9 @@
     "\\site_smartteam",
     "\\site_smartteam\\loadfile",
     "\\site_smartteam\\site_smartteam",
-    "\\site_smartteam\\templates"
+    "\\site_smartteam\\templates",
+    "\\site_smartteam\\utils"
   ],
-  "SelectedNode": "\\site_smartteam\\loadfile\\views.py",
+  "SelectedNode": "\\site_smartteam\\utils\\functions2.py",
   "PreviewInSolutionExplorer": false
 }
